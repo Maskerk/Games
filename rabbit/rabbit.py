@@ -1,5 +1,6 @@
 import pygame,os
 import math
+import random
 from pygame.locals import *
 
 # initialize the game
@@ -14,12 +15,23 @@ keys = [False, False, False, False]
 playerpos=[100,100]
 acc = [0,0]
 arrows = []
+
+#bad guys
+badtimer=100
+badtimer1=0
+badguys=[[640,100]]
+healthvalue=194
+
 # load images
 
 player = pygame.image.load("resources/images/dude.png")
 grass = pygame.image.load("resources/images/grass.png")
 castle = pygame.image.load("resources/images/castle.png")
 arrow = pygame.image.load("resources/images/bullet.png")
+
+
+badguyimg1 = pygame.image.load("resources/images/badguy.png")
+badguyimg=badguyimg1
 
 
 # keep looping through
@@ -47,6 +59,10 @@ while 1:
     #screen.blit(playerrot, playerpos)
 
 
+
+
+
+
     for bullet in arrows:
         index = 0
         velx = math.cos(bullet[0]) * 10
@@ -61,6 +77,45 @@ while 1:
             screen.blit(arrow1, (projectile[1], projectile[2]))
 
         #arrows.append([math.atan2(position[1] - (playerpos1[1] + 32),    position[0] - (playerpos1[0] + 26)),    playerpos1[0] + 32,   playerpos1[1] + 32])
+
+    if badtimer == 0:
+        badguys.append([640, random.randint(50, 430)])
+        badtimer = 100 - (badtimer1 * 2)
+        if badtimer1 >= 35:
+            badtimer1 = 35
+        else:
+            badtimer1 += 5
+    index = 0
+    for badguy in badguys:
+        if badguy[0] < -64:
+            badguys.pop(index)
+        badguy[0] -= 7
+        index += 1
+    for badguy in badguys:
+        screen.blit(badguyimg, badguy)
+
+    index1 = 0
+    for bullet in arrows:
+        bullrect = pygame.Rect(arrow.get_rect())
+        bullrect.left = bullet[1]
+        bullrect.top = bullet[2]
+        if badrect.colliderect(bullrect):
+            acc[0] += 1
+            badguys.pop(index)
+            arrows.pop(index1)
+        index1 += 1
+
+
+
+    badrect = pygame.Rect(badguyimg.get_rect())
+    badrect.top = badguy[1]
+    badrect.left = badguy[0]
+    if badrect.left < 64:
+        healthvalue -= random.randint(5, 20)
+        badguys.pop(index)
+
+
+    badtimer -= 1
 
     # update the screen
     pygame.display.flip()
