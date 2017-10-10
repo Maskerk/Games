@@ -58,78 +58,79 @@ while 1:
     screen.blit(playerrot, playerpos1)
     #screen.blit(playerrot, playerpos)
 
-
-
-
-
-
-    for bullet in arrows:
-        index = 0
-        velx = math.cos(bullet[0]) * 10
-        vely = math.sin(bullet[0]) * 10
-        bullet[1] += velx
-        bullet[2] += vely
-        if bullet[1] < -64 or bullet[1] > 640 or bullet[2] < -64 or bullet[2] > 480:
-            arrows.pop(index)
-        index += 1
-        for projectile in arrows:
-            arrow1 = pygame.transform.rotate(arrow, 360 - projectile[0] * 57.29)
-            screen.blit(arrow1, (projectile[1], projectile[2]))
-
-        #arrows.append([math.atan2(position[1] - (playerpos1[1] + 32),    position[0] - (playerpos1[0] + 26)),    playerpos1[0] + 32,   playerpos1[1] + 32])
-
-    if badtimer == 0:
-        badguys.append([640, random.randint(50, 430)])
-        badtimer = 100 - (badtimer1 * 2)
-        if badtimer1 >= 35:         #?????????????????
-            badtimer1 = 35
-        else:
-            badtimer1 += 5
-
-    index = 0
-    for badguy in badguys:
-        if badguy[0] < -64:
-            badguys.pop(index)
-        badguy[0] -= 7              #?????????????????
-        index += 1
-    for badguy in badguys:
-        screen.blit(badguyimg, badguy)
-
-    badrect = pygame.Rect(badguyimg.get_rect())
-    badrect.top = badguy[1]
-    badrect.left = badguy[0]
-    if badrect.left < 64:
-        healthvalue -= random.randint(5, 20)
-        badguys.pop(index)
-
-
-    index1 = 0
-    for bullet in arrows:
-        #bullrect = pygame.Rect(arrow.get_rect())
-        bullrect = pygame.Rect(arrow.get_rect())
-        bullrect.left = bullet[1]
-        bullrect.top = bullet[2]
-        if badrect.colliderect(bullrect):
-            acc[0] += 1
-            badguys.pop(index)
-            arrows.pop(index1)
-        index1 += 1
-
-
-
-    badrect = pygame.Rect(badguyimg.get_rect())
-    badrect.top = badguy[1]
-    badrect.left = badguy[0]
-    if badrect.left < 64:
-        healthvalue -= random.randint(5, 20)
-        badguys.pop(index)
-
-
-    badtimer -= 1
-
     # update the screen
     pygame.display.flip()
-    # loop through the events
+
+
+
+
+    # for bullet in arrows:
+    #     index = 0
+    #     velx = math.cos(bullet[0]) * 10
+    #     vely = math.sin(bullet[0]) * 10
+    #     bullet[1] += velx
+    #     bullet[2] += vely
+    #     if bullet[1] < -64 or bullet[1] > 640 or bullet[2] < -64 or bullet[2] > 480:
+    #         arrows.pop(index)
+    #     index += 1
+    #     for projectile in arrows:
+    #         arrow1 = pygame.transform.rotate(arrow, 360 - projectile[0] * 57.29)
+    #         screen.blit(arrow1, (projectile[1], projectile[2]))
+    #
+    #     #arrows.append([math.atan2(position[1] - (playerpos1[1] + 32),    position[0] - (playerpos1[0] + 26)),    playerpos1[0] + 32,   playerpos1[1] + 32])
+    #
+    # if badtimer == 0:
+    #     badguys.append([640, random.randint(50, 430)])
+    #     badtimer = 100 - (badtimer1 * 2)
+    #     if badtimer1 >= 35:         #?????????????????
+    #         badtimer1 = 35
+    #     else:
+    #         badtimer1 += 5
+    #
+    # index = 0
+    # for badguy in badguys:
+    #     if badguy[0] < -64:
+    #         badguys.pop(index)
+    #     badguy[0] -= 7              #?????????????????
+    #     index += 1
+    # for badguy in badguys:
+    #     screen.blit(badguyimg, badguy)
+    #
+    # badrect = pygame.Rect(badguyimg.get_rect())
+    # badrect.top = badguy[1]
+    # badrect.left = badguy[0]
+    # if badrect.left < 64:
+    #     healthvalue -= random.randint(5, 20)
+    #     badguys.pop(index)
+    #
+    #
+    # index1 = 0
+    # for bullet in arrows:
+    #     #bullrect = pygame.Rect(arrow.get_rect())
+    #     bullrect = pygame.Rect(arrow.get_rect())
+    #     bullrect.left = bullet[1]
+    #     bullrect.top = bullet[2]
+    #     if badrect.colliderect(bullrect):
+    #         acc[0] += 1
+    #         badguys.pop(index)
+    #         arrows.pop(index1)
+    #     index1 += 1
+    #
+    #
+    #
+    # badrect = pygame.Rect(badguyimg.get_rect())
+    # badrect.top = badguy[1]
+    # badrect.left = badguy[0]
+    # if badrect.left < 64:
+    #     healthvalue -= random.randint(5, 20)
+    #     badguys.pop(index)
+    #
+    #
+    # badtimer -= 1
+    #
+
+    # # loop through the events
+
     for event in pygame.event.get():
         #check if the event is the x button
         if event.type == pygame.QUIT:
@@ -142,36 +143,36 @@ while 1:
             acc[1] += 1
             arrows.append([math.atan2(position[1] - (playerpos1[1] + 32), position[0] - (playerpos1[0] + 26)), playerpos1[0] + 32,playerpos1[1] + 32])
 
-    if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_w:
-            keys[0] = True
-        elif event.key == pygame.K_a:
-            keys[1] = True
-        elif event.key == pygame.K_s:
-            keys[2] = True
-        elif event.key == pygame.K_d:
-            keys[3] = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_w:
+                keys[0] = True
+            elif event.key == pygame.K_a:
+                keys[1] = True
+            elif event.key == pygame.K_s:
+                keys[2] = True
+            elif event.key == pygame.K_d:
+                keys[3] = True
 
-    if event.type == pygame.KEYUP:
-        if event.key == pygame.K_w:
-            keys[0] = False
-        elif event.key == pygame.K_a:
-            keys[1] = False
-        elif event.key == pygame.K_s:
-            keys[2] = False
-        elif event.key == pygame.K_d:
-            keys[3] = False
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_w:
+                keys[0] = False
+            elif event.key == pygame.K_a:
+                keys[1] = False
+            elif event.key == pygame.K_s:
+                keys[2] = False
+            elif event.key == pygame.K_d:
+                keys[3] = False
 
-    #area limited
-    if keys[0]:
-        #if playerpos[1]>5 :
-        playerpos[1] -= 5
-    elif keys[1]:
-        #if playerpos[1] > 5:
-        playerpos[0] -= 5
-    elif keys[2]:
-        #if playerpos[0] < height:
-        playerpos[1] += 5
-    elif keys[3]:
-        #if playerpos[1] < width:
-        playerpos[0] += 5
+        #area limited
+        if keys[0]:
+            #if playerpos[1]>5 :
+            playerpos[1] -= 5
+        elif keys[1]:
+            #if playerpos[1] > 5:
+            playerpos[0] -= 5
+        elif keys[2]:
+            #if playerpos[0] < height:
+            playerpos[1] += 5
+        elif keys[3]:
+            #if playerpos[1] < width:
+            playerpos[0] += 5
