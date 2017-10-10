@@ -81,21 +81,31 @@ while 1:
     if badtimer == 0:
         badguys.append([640, random.randint(50, 430)])
         badtimer = 100 - (badtimer1 * 2)
-        if badtimer1 >= 35:
+        if badtimer1 >= 35:         #?????????????????
             badtimer1 = 35
         else:
             badtimer1 += 5
+
     index = 0
     for badguy in badguys:
         if badguy[0] < -64:
             badguys.pop(index)
-        badguy[0] -= 7
+        badguy[0] -= 7              #?????????????????
         index += 1
     for badguy in badguys:
         screen.blit(badguyimg, badguy)
 
+    badrect = pygame.Rect(badguyimg.get_rect())
+    badrect.top = badguy[1]
+    badrect.left = badguy[0]
+    if badrect.left < 64:
+        healthvalue -= random.randint(5, 20)
+        badguys.pop(index)
+
+
     index1 = 0
     for bullet in arrows:
+        #bullrect = pygame.Rect(arrow.get_rect())
         bullrect = pygame.Rect(arrow.get_rect())
         bullrect.left = bullet[1]
         bullrect.top = bullet[2]
@@ -152,16 +162,16 @@ while 1:
         elif event.key == pygame.K_d:
             keys[3] = False
 
-    # area limited
-    # if keys[0]:
-    #     if playerpos[1]>5 :
-    #         playerpos[1] -= 5
-    # elif keys[1]:
-    #     if playerpos[1] > 5:
-    #         playerpos[0] -= 5
-    # elif keys[2]:
-    #     if playerpos[0] < height:
-    #         playerpos[1] += 5
-    # elif keys[3]:
-    #     if playerpos[1] < width:
-    #         playerpos[0] += 5
+    #area limited
+    if keys[0]:
+        #if playerpos[1]>5 :
+        playerpos[1] -= 5
+    elif keys[1]:
+        #if playerpos[1] > 5:
+        playerpos[0] -= 5
+    elif keys[2]:
+        #if playerpos[0] < height:
+        playerpos[1] += 5
+    elif keys[3]:
+        #if playerpos[1] < width:
+        playerpos[0] += 5
